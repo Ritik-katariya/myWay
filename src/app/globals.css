@@ -13,7 +13,7 @@
   --primary-color: #000000;
   --secondary-color: #9333ea;
   --tertiary-color: #10b981;
-  --text-color:#ffff;
+  --text-color:#273246;
   --font-main: 'Inter', sans-serif; 
 }
 
@@ -27,4 +27,22 @@ body {
   --color-primary:var(--primary-color);
   --color-secondary:var(--secondary-color);
   --color-tertiary:var(--tertiary-color);
+  --color-textcolor:var(--text-color);
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+}
+
+
+
+
+
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
 }
