@@ -10,8 +10,8 @@ export const HoverEffect = ({
 }: {
   items: {
     title: string;
-    description: string;
-    link: string;
+    skills: string[];
+    link?: string;
   }[];
   className?: string;
 }) => {
@@ -49,9 +49,18 @@ export const HoverEffect = ({
               />
             )}
           </AnimatePresence>
-          <Card>
+         <Card className="relative z-10">
             <CardTitle>{item.title}</CardTitle>
-            <CardDescription>{item.description}</CardDescription>
+            <CardDescription>
+              {item.skills.map((skill, index) => (
+                <span
+                  key={skill}
+                  className="inline-block mr-2 mb-2 bg-slate-700 text-white rounded-full px-3 py-1 text-sm"
+                >
+                  {skill}
+                </span>
+              ))}
+            </CardDescription>
           </Card>
         </a>
       ))}

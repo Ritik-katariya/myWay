@@ -24,9 +24,9 @@ export function Hero() {
             Where Code, <br /> Meets Efficiency.
           </h2>
 
-          <p className="text-center text-lg md:text-3xl mb-4 font-semibold font-mono">
+          <div className="text-center text-lg md:text-3xl mb-4 font-semibold font-mono">
             <FlipWords words={words} />
-          </p>
+          </div>
 
           <p className="max-w-xl mx-auto text-sm md:text-lg text-neutral-700 dark:text-neutral-400 text-center">
             Full-stack developer specializing in API optimization, real-time
