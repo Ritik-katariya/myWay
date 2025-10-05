@@ -32,14 +32,32 @@ const handleSubmit = async (e: HandleSubmitEvent): Promise<void> => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise<void>(resolve => setTimeout(resolve, 2000));
-    
-    console.log('Form submitted:', formData);
-    setIsSubmitting(false);
-    
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        console.log('Form submitted successfully:', data.message);
+        // Reset form
+        setFormData({ name: '', email: '', message: '' });
+        // You could add a success toast notification here
+      } else {
+        console.error('Form submission failed:', data.error);
+        // You could add an error toast notification here
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // You could add an error toast notification here
+    } finally {
+      setIsSubmitting(false);
+    }
 };
 
   const socialLinks = [
@@ -255,69 +273,3 @@ const handleSubmit = async (e: HandleSubmitEvent): Promise<void> => {
 };
 
 export default ContactComponent;
-
-// Custom CSS for animations
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes slide-in-left {
-    from { opacity: 0; transform: translateX(-50px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  
-  @keyframes slide-in-right {
-    from { opacity: 0; transform: translateX(50px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  
-  @keyframes bounce-in {
-    0% { opacity: 0; transform: scale(0.3); }
-    50% { opacity: 1; transform: scale(1.05); }
-    70% { transform: scale(0.9); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-  
-  @keyframes fade-in-up {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes gradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-  
-  .animate-fade-in {
-    animation: fade-in 1s ease-out forwards;
-  }
-  
-  .animate-slide-in-left {
-    animation: slide-in-left 0.8s ease-out forwards;
-    opacity: 0;
-  }
-  
-  .animate-slide-in-right {
-    animation: slide-in-right 0.8s ease-out forwards;
-    opacity: 0;
-  }
-  
-  .animate-bounce-in {
-    animation: bounce-in 0.6s ease-out forwards;
-    opacity: 0;
-  }
-  
-  .animate-fade-in-up {
-    animation: fade-in-up 0.6s ease-out forwards;
-    opacity: 0;
-  }
-  
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 3s ease infinite;
-  }
-`;
-document.head.appendChild(style);

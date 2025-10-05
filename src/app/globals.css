@@ -4,16 +4,16 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #5a5a5a61;
   }
 }
 
 
   :root {
   --primary-color: #000000;
-  --secondary-color: #9333ea;
+  --secondary-color: #076860;
   --tertiary-color: #10b981;
-  --text-color:#273246;
+  --text-color:#ffffff;
   --font-main: 'Inter', sans-serif; 
 }
 

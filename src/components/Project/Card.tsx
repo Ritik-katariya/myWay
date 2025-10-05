@@ -1,53 +1,136 @@
 import { CardSpotlight } from "@/components/ui/card-spotlight";
+import Image from "next/image";
+import project from "../../../public/project.jpg";
 
-export function Card() {
-  return (
-    <CardSpotlight className="h-96 w-96">
-      <p className="text-xl font-bold relative z-20 mt-2 text-white">
-        Authentication steps
-      </p>
-      <div className="text-neutral-200 mt-4 relative z-20">
-        Follow these steps to secure your account:
-        <ul className="list-none  mt-2">
-          <Step title="Enter your email address" />
-          <Step title="Create a strong password" />
-          <Step title="Set up two-factor authentication" />
-          <Step title="Verify your identity" />
-        </ul>
-      </div>
-      <p className="text-neutral-300 mt-4 relative z-20 text-sm">
-        Ensuring your account is properly secured helps protect your personal
-        information and data.
-      </p>
-    </CardSpotlight>
-  );
+interface Project {
+  _id: string;
+  title: string;
+  description: string;
+  longDescription?: string;
+  image: string;
+  images?: string[];
+  technologies: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  category: 'web' | 'mobile' | 'desktop' | 'ai' | 'other';
+  status: 'completed' | 'in-progress' | 'planned';
+  featured: boolean;
+  order: number;
 }
 
-const Step = ({ title }: { title: string }) => {
-  return (
-    <li className="flex gap-2 items-start">
-      <CheckIcon />
-      <p className="text-white">{title}</p>
-    </li>
-  );
-};
+interface CardProps {
+  project: Project;
+}
 
-const CheckIcon = () => {
+export function Card({ project }: CardProps) {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'bg-green-500';
+      case 'in-progress':
+        return 'bg-yellow-500';
+      case 'planned':
+        return 'bg-blue-500';
+      default:
+        return 'bg-gray-500';
+    }
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'Completed';
+      case 'in-progress':
+        return 'In Progress';
+      case 'planned':
+        return 'Planned';
+      default:
+        return 'Unknown';
+    }
+  };
+
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className="h-4 w-4 text-blue-500 mt-1 shrink-0"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path
-        d="M12 2c-.218 0 -.432 .002 -.642 .005l-.616 .017l-.299 .013l-.579 .034l-.553 .046c-4.785 .464 -6.732 2.411 -7.196 7.196l-.046 .553l-.034 .579c-.005 .098 -.01 .198 -.013 .299l-.017 .616l-.004 .318l-.001 .324c0 .218 .002 .432 .005 .642l.017 .616l.013 .299l.034 .579l.046 .553c.464 4.785 2.411 6.732 7.196 7.196l.553 .046l.579 .034c.098 .005 .198 .01 .299 .013l.616 .017l.642 .005l.642 -.005l.616 -.017l.299 -.013l.579 -.034l.553 -.046c4.785 -.464 6.732 -2.411 7.196 -7.196l.046 -.553l.034 -.579c.005 -.098 .01 -.198 .013 -.299l.017 -.616l.005 -.642l-.005 -.642l-.017 -.616l-.013 -.299l-.034 -.579l-.046 -.553c-.464 -4.785 -2.411 -6.732 -7.196 -7.196l-.553 -.046l-.579 -.034a28.058 28.058 0 0 0 -.299 -.013l-.616 -.017l-.318 -.004l-.324 -.001zm2.293 7.293a1 1 0 0 1 1.497 1.32l-.083 .094l-4 4a1 1 0 0 1 -1.32 .083l-.094 -.083l-2 -2a1 1 0 0 1 1.32 -1.497l.094 .083l1.293 1.292l3.293 -3.292z"
-        fill="currentColor"
-        strokeWidth="0"
-      />
-    </svg>
+    <div className="relative max-w-sm mx-auto rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group">
+      {/* Image Container */}
+      <div className="relative overflow-hidden">
+        <Image
+          src={project.image || project}
+          alt={project.title}
+          width={300}
+          height={300}
+          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        
+        {/* Status Badge */}
+        <div className="absolute top-2 right-2">
+          <span className={`${getStatusColor(project.status)} text-white text-xs px-2 py-1 rounded-full font-medium`}>
+            {getStatusText(project.status)}
+          </span>
+        </div>
+        
+        {/* Featured Badge */}
+        {project.featured && (
+          <div className="absolute top-2 left-2">
+            <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+              ⭐ Featured
+            </span>
+          </div>
+        )}
+      </div>
+      
+      {/* Content Container */}
+      <CardSpotlight className="h-60 w-full p-6">
+        <p className="text-xl font-bold relative z-20 text-white mb-3">
+          {project.title}
+        </p>
+        
+        <div className="text-neutral-300 text-sm mb-4 relative z-20 leading-relaxed">
+          {project.description}
+        </div>
+        
+        {/* Tech Stack Tags */}
+        <div className="relative z-20">
+          {project.technologies.slice(0, 4).map((tech) => (
+            <span
+              key={tech}
+              className="inline-block bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs px-3 py-1.5 rounded-full mr-2 mb-2 hover:from-blue-600 hover:to-blue-700 transition-all duration-200 cursor-pointer hover:scale-105 shadow-md capitalize"
+            >
+              {tech.toLowerCase()}
+            </span>
+          ))}
+          {project.technologies.length > 4 && (
+            <span className="inline-block bg-gray-600 text-white text-xs px-3 py-1.5 rounded-full mr-2 mb-2">
+              +{project.technologies.length - 4} more
+            </span>
+          )}
+        </div>
+        
+        {/* Action Buttons */}
+        <div className="relative z-20 mt-4 flex gap-2">
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 bg-gray-800 hover:bg-gray-700 text-white text-xs px-3 py-2 rounded-lg transition-colors duration-200 text-center"
+            >
+              GitHub
+            </a>
+          )}
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-2 rounded-lg transition-colors duration-200 text-center"
+            >
+              Live Demo
+            </a>
+          )}
+        </div>
+      </CardSpotlight>
+    </div>
   );
-};
+}

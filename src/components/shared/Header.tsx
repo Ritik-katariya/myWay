@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/resizable-navbar";
 import { useState } from "react";
 import { Lavishly_Yours } from 'next/font/google';
+import { BookModal } from "../BookModal";
+
 
 const lavishlyYours = Lavishly_Yours({
   weight: '400', // or ['400'] if multiple weights are supported
@@ -54,8 +56,8 @@ export function Header() {
           </h3>
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="secondary">Login</NavbarButton>
-            <NavbarButton variant="primary">Book a call</NavbarButton>
+           
+            <NavbarButton variant="primary" ><BookModal/></NavbarButton>
           </div>
         </NavBody>
 
@@ -88,13 +90,7 @@ export function Header() {
               </a>
             ))}
             <div className="flex w-full flex-col gap-4">
-              <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
-                variant="primary"
-                className="w-full"
-              >
-                Login
-              </NavbarButton>
+             
               <NavbarButton
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"

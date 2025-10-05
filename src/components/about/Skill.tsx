@@ -1,8 +1,64 @@
 "use client";
 import { HoverEffect } from "../ui/card-hover-effect";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { dummySkills } from "@/lib/dummyData";
+
+interface Skill {
+  _id: string;
+  category: string;
+  skills: string[];
+  order: number;
+}
 
 export function Skill() {
+  const [skills, setSkills] = useState<Skill[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/skills');
+        const data = await response.json();
+        
+        if (data.success) {
+          setSkills(data.data);
+        } else {
+          // Fallback to dummy data if API fails
+          setSkills(dummySkills);
+        }
+      } catch (err) {
+        console.error('Error fetching skills:', err);
+        setError('Failed to load skills');
+        // Fallback to dummy data
+        setSkills(dummySkills);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSkills();
+  }, []);
+
+  // Transform skills data for HoverEffect component
+  const techSkills = skills.map(skill => ({
+    title: skill.category,
+    skills: skill.skills
+  }));
+
+  if (loading) {
+    return (
+      <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-gray-400">Loading skills...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
       <motion.h1
@@ -21,6 +77,12 @@ export function Skill() {
         </span>
       </motion.h1>
       
+      {error && (
+        <div className="text-yellow-500 text-sm mb-8 text-center">
+          ⚠️ Using demo data - {error}
+        </div>
+      )}
+      
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -35,38 +97,3 @@ export function Skill() {
     </div>
   );
 }
-
-export const techSkills = [
-  {
-    title: "Programming Languages",
-    skills: ["JavaScript", "TypeScript", "C/C++", "Python"],
-  },
-  {
-    title: "Frontend",
-    skills: ["React.js", "Next.js"],
-  },
-  {
-    title: "Backend",
-    skills: ["Node.js", "Express.js"],
-  },
-  {
-    title: "Databases",
-    skills: ["MongoDB", "PostgreSQL"],
-  },
-  {
-    title: "UI Library / CSS",
-    skills: ["Tailwind CSS"],
-  },
-  {
-    title: "Tools",
-    skills: ["Git & GitHub"],
-  },
-  {
-    title: "AI & ML",
-    skills: ["TensorFlow", "PyTorch"], // placeholder examples, add your own
-  },
-  {
-    title: "Operating Systems",
-    skills: ["Linux", "Windows"], // placeholder examples, add your own
-  },
-];

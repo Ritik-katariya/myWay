@@ -1,42 +1,112 @@
+"use client";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
+import { useEffect, useState } from "react";
+import { dummyTestimonials } from "@/lib/dummyData";
+
+interface Testimonial {
+  _id: string;
+  name: string;
+  designation: string;
+  company?: string;
+  quote: string;
+  image: string;
+  rating?: number;
+  order: number;
+}
 
 export function Testimonials() {
-  const testimonials = [
-    {
-      quote:
-        "The attention to detail and innovative features have completely transformed our workflow. This is exactly what we've been looking for.",
-      name: "Sarah Chen",
-      designation: "Product Manager at TechFlow",
-      src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      quote:
-        "Implementation was seamless and the results exceeded our expectations. The platform's flexibility is remarkable.",
-      name: "Michael Rodriguez",
-      designation: "CTO at InnovateSphere",
-      src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      quote:
-        "This solution has significantly improved our team's productivity. The intuitive interface makes complex tasks simple.",
-      name: "Emily Watson",
-      designation: "Operations Director at CloudScale",
-      src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      quote:
-        "Outstanding support and robust features. It's rare to find a product that delivers on all its promises.",
-      name: "James Kim",
-      designation: "Engineering Lead at DataPro",
-      src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      quote:
-        "The scalability and performance have been game-changing for our organization. Highly recommend to any growing business.",
-      name: "Lisa Thompson",
-      designation: "VP of Technology at FutureNet",
-      src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
-  return <AnimatedTestimonials testimonials={testimonials} />;
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/testimonials');
+        const data = await response.json();
+        
+        if (data.success) {
+          setTestimonials(data.data);
+        } else {
+          // Fallback to dummy data if API fails
+          setTestimonials(
+            dummyTestimonials.map((t, idx) => ({
+              ...t,
+              _id: `dummy-${idx}`,
+            }))
+          );
+        }
+      } catch (err) {
+        console.error('Error fetching testimonials:', err);
+        setError('Failed to load testimonials');
+        // Fallback to dummy data
+        setTestimonials(
+          dummyTestimonials.map((t, idx) => ({
+            ...t,
+            _id: t._id ?? `dummy-${idx}`,
+          }))
+        );
+        // Fallback to dummy data
+        setTestimonials(dummyTestimonials);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
+
+  // Transform testimonials data for AnimatedTestimonials component
+  const formattedTestimonials = testimonials.map(testimonial => ({
+    quote: testimonial.quote,
+    name: testimonial.name,
+    designation: testimonial.designation,
+    src: testimonial.image,
+  }));
+  if (loading) {
+    return (
+      <div>
+        <div className="text-center mb-16">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-gray-400">Loading testimonials...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="text-center mb-16">
+        <h1 className="font-bold text-gray-400 text-4xl sm:text-5xl lg:text-6xl text-center mb-6 tracking-tight relative inline-block">
+          Testimonials
+          {/* Animated underline */}
+          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse group-hover:w-full transition-all duration-700 ease-out"></div>
+          {/* Static decorative underline */}
+          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-52 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+          {/* Enhanced decorative dots */}
+          <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            <div
+              className="w-2 h-2 bg-blue-900 rounded-full animate-bounce"
+              style={{ animationDelay: "0s" }}
+            ></div>
+            <div
+              className="w-2 h-2 bg-gray-700 rounded-full animate-bounce"
+              style={{ animationDelay: "0.1s" }}
+            ></div>
+            <div
+              className="w-2 h-2 bg-blue-900 rounded-full animate-bounce"
+              style={{ animationDelay: "0.2s" }}
+            ></div>
+          </div>
+        </h1>
+        {error && (
+          <div className="text-yellow-500 text-sm mb-4">
+            ⚠️ Using demo data - {error}
+          </div>
+        )}
+      </div>  
+      <AnimatedTestimonials testimonials={formattedTestimonials} />
+    </div>
+  );
 }
