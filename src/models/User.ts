@@ -1,50 +1,56 @@
-import { Schema, model, models, Model } from 'mongoose';
-import { IUser } from '../interfaces/IUser';
+import { Schema, model, models, Model } from "mongoose";
+import { IUser } from "../interfaces/IUser";
 
 const UserSchema = new Schema<IUser>(
   {
+    clerkUserId: {
+      type: String,
+      index: true,
+      unique: true,
+      sparse: true,
+    },
     name: {
       type: String,
-      required: [true, 'Please provide a name'],
-      maxlength: [50, 'Name cannot be more than 50 characters'],
+      required: [true, "Please provide a name"],
+      maxlength: [50, "Name cannot be more than 50 characters"],
       trim: true,
     },
     email: {
       type: String,
-      required: [true, 'Please provide an email'],
+      required: [true, "Please provide an email"],
       unique: true,
       lowercase: true,
       match: [
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-        'Please provide a valid email address',
+        "Please provide a valid email address",
       ],
     },
     username: {
       type: String,
-      required: [true, 'Please provide a username'],
-      minlength: [4, 'Username must be at least 4 characters'],
-      maxlength: [20, 'Username cannot be more than 20 characters'],
+      required: [true, "Please provide a username"],
+      minlength: [4, "Username must be at least 4 characters"],
+      maxlength: [20, "Username cannot be more than 20 characters"],
       unique: true,
     },
     avatar: {
       type: String,
-      default: 'default-avatar.png',
+      default: "default-avatar.png",
     },
     bio: {
       type: String,
-      maxlength: [500, 'Bio cannot be more than 500 characters'],
+      maxlength: [500, "Bio cannot be more than 500 characters"],
     },
     title: {
       type: String,
-      maxlength: [100, 'Title cannot be more than 100 characters'],
+      maxlength: [100, "Title cannot be more than 100 characters"],
     },
     location: {
       type: String,
-      maxlength: [100, 'Location cannot be more than 100 characters'],
+      maxlength: [100, "Location cannot be more than 100 characters"],
     },
     phone: {
       type: String,
-      maxlength: [20, 'Phone cannot be more than 20 characters'],
+      maxlength: [20, "Phone cannot be more than 20 characters"],
     },
     website: {
       type: String,
@@ -75,6 +81,6 @@ const UserSchema = new Schema<IUser>(
 UserSchema.index({ email: 1 });
 UserSchema.index({ username: 1 });
 
-const User: Model<IUser> = models.User || model<IUser>('User', UserSchema);
+const User: Model<IUser> = models.User || model<IUser>("User", UserSchema);
 
 export default User;

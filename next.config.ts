@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  webpack: (config, { isServer }) => {
+    // Suppress the webpack cache warning for big strings
+    config.infrastructureLogging = {
+      level: "error",
+    };
+
+    return config;
+  },
 };
 
 export default nextConfig;
