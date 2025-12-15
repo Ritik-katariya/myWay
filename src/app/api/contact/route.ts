@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status');
     const limit = searchParams.get('limit');
     
-    let query: any = {};
+    const query: any = {};
     
     if (status) {
       query.status = status;

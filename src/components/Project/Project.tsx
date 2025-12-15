@@ -4,7 +4,7 @@ import { Card } from './Card';
 import { dummyProjects } from '@/lib/dummyData';
 
 interface Project {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
   longDescription?: string;
@@ -35,13 +35,13 @@ export default function Project() {
           setProjects(data.data);
         } else {
           // Fallback to dummy data if API fails
-          setProjects(dummyProjects);
+          setProjects(dummyProjects as any);
         }
       } catch (err) {
         console.error('Error fetching projects:', err);
         setError('Failed to load projects');
         // Fallback to dummy data
-        setProjects(dummyProjects);
+        setProjects(dummyProjects as any);
       } finally {
         setLoading(false);
       }
@@ -94,7 +94,7 @@ export default function Project() {
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 w-full min-h-screen mb-20 px-28 pl-32'>
         {projects.map((project) => (
-          <Card key={project._id || project.title} project={project} />
+          <Card key={project._id || project.title} project={project as any} />
         ))}
       </div>
     </div>

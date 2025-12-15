@@ -118,7 +118,8 @@ export const HeroSection = forwardRef<SectionHandle, HeroSectionProps>(
       if (_props.onValidityChange) {
         _props.onValidityChange(isValid());
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+
+
     }, [heroData]);
 
     return (

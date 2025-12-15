@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import { Lavishly_Yours } from 'next/font/google';
 import { BookModal } from "../BookModal";
+import Link from 'next/link';
 
 
 const lavishlyYours = Lavishly_Yours({
@@ -50,9 +51,9 @@ export function Header() {
         <NavBody>
           {/* <NavbarLogo /> */}
           <h3 className="text-2xl text-neutral-100 font-bold ml-4">
-            <a href="/" className={lavishlyYours.className} >
+            <Link href="/" className={lavishlyYours.className} >
               Ritik Katariya
-            </a>
+            </Link>
           </h3>
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
@@ -65,9 +66,9 @@ export function Header() {
         <MobileNav>
           <MobileNavHeader>
              <h3 className="text-base text-neutral-100 font-bold ml-4">
-            <a href="/" className={lavishlyYours.className} >
+            <Link href="/" className={lavishlyYours.className} >
               Ritik Katariya
-            </a>
+            </Link>
           </h3>
             <MobileNavToggle
               isOpen={isMobileMenuOpen}
@@ -80,14 +81,14 @@ export function Header() {
             onClose={() => setIsMobileMenuOpen(false)}
           >
             {navItems.map((item, idx) => (
-              <a
+              <Link
                 key={`mobile-link-${idx}`}
                 href={item.link}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="relative text-neutral-600 dark:text-neutral-300"
               >
                 <span className="block">{item.name}</span>
-              </a>
+              </Link>
             ))}
             <div className="flex w-full flex-col gap-4">
              

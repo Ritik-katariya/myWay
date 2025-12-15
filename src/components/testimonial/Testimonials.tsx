@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { dummyTestimonials } from "@/lib/dummyData";
 
 interface Testimonial {
-  _id: string;
+  _id?: string;
   name: string;
   designation: string;
   company?: string;
@@ -44,7 +44,7 @@ export function Testimonials() {
         setTestimonials(
           dummyTestimonials.map((t, idx) => ({
             ...t,
-            _id: t._id ?? `dummy-${idx}`,
+            _id: `dummy-${idx}`,
           }))
         );
         // Fallback to dummy data

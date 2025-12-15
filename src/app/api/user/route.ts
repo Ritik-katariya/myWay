@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const username = searchParams.get('username');
     
-    let query: any = {};
+    const query: any = {};
     
     if (username) {
       query.username = username;

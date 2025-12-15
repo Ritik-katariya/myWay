@@ -1,5 +1,5 @@
 
-import FormData from 'form-data'
+
 import { resumeparser } from '@/server/resume-parser-action';
 
 export const parseResume = async (file: File) => {

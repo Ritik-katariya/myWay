@@ -16,7 +16,7 @@ export class ProjectService {
   }) {
     await connectToDatabase();
     
-    let query: any = {};
+    const query: any = {};
     
     if (filters?.featured !== undefined) {
       query.featured = filters.featured;
@@ -179,7 +179,7 @@ export class ContactService {
   static async getAllContacts(filters?: { status?: string; limit?: number }) {
     await connectToDatabase();
     
-    let query: any = {};
+    const query: any = {};
     
     if (filters?.status) {
       query.status = filters.status;

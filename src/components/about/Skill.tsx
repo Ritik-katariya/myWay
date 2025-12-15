@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { dummySkills } from "@/lib/dummyData";
 
 interface Skill {
-  _id: string;
+  _id?: string;
   category: string;
   skills: string[];
   order: number;

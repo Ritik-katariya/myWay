@@ -234,7 +234,7 @@ export const dummyTimeline = [
     title: "2023",
     content: "Completed advanced full-stack development bootcamp and started contributing to major open-source projects. Built and deployed 10+ web applications.",
     images: [
-      "https://assets.aceternity.com/pro/hero-sections.png",
+      "https://example.com/image.png",
       "https://assets.aceternity.com/features-section.png",
       "https://assets.aceternity.com/pro/bento-grids.png",
       "https://assets.aceternity.com/cards.png"

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
-import Project from '@/models/Portfolio';
-import { IProject } from '@/interfaces/IProject';
+import Project from '@/models/Project';
+
 
 // GET /api/projects - Get all projects
 export async function GET(request: NextRequest) {
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category');
     const limit = searchParams.get('limit');
     
-    let query: any = {};
+    const query: any = {};
     
     if (featured === 'true') {
       query.featured = true;

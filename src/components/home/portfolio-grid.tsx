@@ -187,7 +187,7 @@ export function PortfolioGrid({ filters }: PortfolioGridProps) {
       {/* Portfolio Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
         {portfolios.map((portfolio) => (
-          <div className="will-change-transform transition-transform duration-200 hover:translate-y-[-2px]">
+          <div key={portfolio.id} className="will-change-transform transition-transform duration-200 hover:translate-y-[-2px]">
             <PortfolioCard
               key={portfolio.id}
               portfolio={portfolio}
@@ -236,7 +236,7 @@ export function PortfolioGrid({ filters }: PortfolioGridProps) {
       {/* End of Results */}
       {!hasMore && portfolios.length > 0 && (
         <div className="text-center py-8">
-          <p className="text-white/70">You've reached the end! 🎉</p>
+          <p className="text-white/70">You&apos;ve reached the end! 🎉</p>
           <p className="text-sm text-white/50 mt-1">
             Showing all {portfolios.length} portfolios
           </p>

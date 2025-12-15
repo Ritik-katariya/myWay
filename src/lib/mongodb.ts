@@ -7,7 +7,7 @@ if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI environment variable in .env");
 }
 
-let cached = globalThis as any;
+const cached = globalThis as any;
 
 if (!cached.mongoose) {
   cached.mongoose = { conn: null, promise: null };

@@ -2,7 +2,7 @@
   "name": "myway",
   "version": "0.1.0",
   "private": true,
- "scripts": {
+  "scripts": {
     "dev": "pnpm next dev",
     "build": "pnpm next build",
     "start": "pnpm next start"
@@ -23,6 +23,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cobe": "^0.6.4",
+    "framer-motion": "^12.23.26",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.525.0",
     "mongoose": "^8.17.2",

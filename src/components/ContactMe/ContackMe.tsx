@@ -16,7 +16,7 @@ interface FormData {
     message: string;
 }
 
-interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> {}
+type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
 const handleInputChange = (e: InputChangeEvent) => {
     const { name, value } = e.target;
@@ -26,7 +26,7 @@ const handleInputChange = (e: InputChangeEvent) => {
     }));
 };
 
-interface HandleSubmitEvent extends React.MouseEvent<HTMLButtonElement, MouseEvent> {}
+type HandleSubmitEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
 const handleSubmit = async (e: HandleSubmitEvent): Promise<void> => {
     e.preventDefault();
@@ -103,7 +103,7 @@ const handleSubmit = async (e: HandleSubmitEvent): Promise<void> => {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             Whether you have a project in mind or just want to chat tech,{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient">
-              I'd love to hear from you!
+              I&apos;d love to hear from you!
             </span>
           </h1>
         </div>

@@ -1,6 +1,8 @@
 import { CardSpotlight } from "@/components/ui/card-spotlight";
 import Image from "next/image";
-import project from "../../../public/project.jpg";
+import placeholderImage from "../../../public/project.jpg";
+
+
 
 interface Project {
   _id: string;
@@ -54,7 +56,7 @@ export function Card({ project }: CardProps) {
       {/* Image Container */}
       <div className="relative overflow-hidden">
         <Image
-          src={project.image || project}
+          src={project.image || placeholderImage}
           alt={project.title}
           width={300}
           height={300}

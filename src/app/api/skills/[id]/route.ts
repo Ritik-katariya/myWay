@@ -5,12 +5,13 @@ import Skill from '@/models/Skill';
 // GET /api/skills/[id] - Get a specific skill category
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     await connectToDatabase();
     
-    const skill = await Skill.findById(params.id);
+    const skill = await Skill.findById(id);
     
     if (!skill) {
       return NextResponse.json(
@@ -35,15 +36,16 @@ export async function GET(
 // PUT /api/skills/[id] - Update a skill category
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     await connectToDatabase();
     
     const body = await request.json();
     
     const skill = await Skill.findByIdAndUpdate(
-      params.id,
+      id,
       body,
       { new: true, runValidators: true }
     );
@@ -80,12 +82,13 @@ export async function PUT(
 // DELETE /api/skills/[id] - Delete a skill category
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     await connectToDatabase();
     
-    const skill = await Skill.findByIdAndDelete(params.id);
+    const skill = await Skill.findByIdAndDelete(id);
     
     if (!skill) {
       return NextResponse.json(

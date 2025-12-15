@@ -4,7 +4,7 @@ import { Timeline } from "@/components/ui/timeline";
 import { dummyTimeline } from "@/lib/dummyData";
 
 interface TimelineEntry {
-  _id: string;
+  _id?: string;
   title: string;
   content: string;
   images?: string[];

@@ -1,0 +1,7 @@
+D:\my pc\main\Aura\myProject\MY_WAY\myway\src\components\ContactMe\ContackMe.tsx: 257
+D:\my pc\main\Aura\myProject\MY_WAY\myway\src\components\dashboard\sections\HeroSection.tsx: 352
+D:\my pc\main\Aura\myProject\MY_WAY\myway\src\components\dashboard\sections\ProjectsSection.tsx: 256
+D:\my pc\main\Aura\myProject\MY_WAY\myway\src\components\home\portfolio-grid.tsx: 232
+D:\my pc\main\Aura\myProject\MY_WAY\myway\src\components\ui\canvas-reveal-effect.tsx: 286
+D:\my pc\main\Aura\myProject\MY_WAY\myway\src\components\ui\resizable-navbar.tsx: 264
+D:\my pc\main\Aura\myProject\MY_WAY\myway\src\lib\dummyData.ts: 267

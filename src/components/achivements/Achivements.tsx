@@ -16,7 +16,7 @@ import {
 } from "@tabler/icons-react";
 
 interface Achievement {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
   icon?: string;
